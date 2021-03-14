@@ -1,11 +1,11 @@
 
 .Songs{
     width:500px;
-    padding: 10px;
+    padding: 30px;
     margin-top:20px;
     background-color: powderblue;
     color:darkslategray;
-    border-radius: 5px;
+    border-radius: 20px;
   }
   
   .Songs ul{

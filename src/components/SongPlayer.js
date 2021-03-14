@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { Heading } from "./Heading";
 import "./SongPlayer.css";
 
-export function SongPlayer({ showControls = false, song, isLooped = true, handleChangeToPreviousSong, handleChangeToNextSong }) {
+export function SongPlayer({ showControls = false, song, isLooped = true, handleChangeToPreviousSong, handleChangeToNextSong,   }) {
 
   const audioRef = useRef();
   const { audioUrl, coverUrl, artist, title } = song;

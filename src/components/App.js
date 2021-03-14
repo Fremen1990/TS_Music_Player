@@ -43,6 +43,7 @@ export function App() {
       }
     });
   }, []);
+  
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
   const currentSong = songs[currentSongIndex];
   function handleSelectSong(selectedSong) {
@@ -51,15 +52,34 @@ export function App() {
     );
     if (audioIndex >= 0) {
       setCurrentSongIndex(audioIndex);
+      console.log("current song index is !!! : ", currentSongIndex)
     }
   }
+
+  function handleChangeToPreviousSong(){
+     if(currentSongIndex>0){
+      setCurrentSongIndex(prevState =>prevState-1)}
+      if(currentSongIndex===0){
+        setCurrentSongIndex(songs.length-1)
+      }    
+  }
+
+  function handleChangeToNextSong(){
+if(currentSongIndex>=0){
+  setCurrentSongIndex(prevState=>prevState+1)
+}
+if(currentSongIndex===songs.length-1){
+  setCurrentSongIndex(0)
+}}
+
+
   return (
     <div className="App">
       {songs.length === 0 ? (
         "Loading..."
       ) : (
         <>
-          <SongPlayer isLooped song={currentSong} />
+          <SongPlayer isLooped song={currentSong} handleChangeToNextSong={handleChangeToNextSong} handleChangeToPreviousSong={handleChangeToPreviousSong}/>
           <Songs>
             <>
               <Heading title="Songs" />

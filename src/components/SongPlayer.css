@@ -27,3 +27,11 @@
       cursor: pointer;
     }
     
+    .SongPlayer .pauseButtonInActive{
+      display: none;
+    }
+    .SongPlayer .playButtonInactive{
+      display: none;
+    }
+
+

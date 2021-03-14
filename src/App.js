@@ -1,13 +1,29 @@
 import "./styles.css";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 //napster API
-const APIkey = "MWNiZjM1OTctYmRmYS00ODNhLTlkOTYtZDhkOTE0MzY3ODVl";
+// const APIkey = "MWNiZjM1OTctYmRmYS00ODNhLTlkOTYtZDhkOTE0MzY3ODVl";
 // const albumCoverLink = `http://direct.rhapsody.com/imageserver/v2/albums/${albumId}/images/300x300.jpg`
+// const API = `https://api.napster.com/v2.1/tracks/top?apikey=${APIkey}`;
+// const top10TracksForAnArtisAPI = `http://api.napster.com/v2.2/artists/Art.28463069/tracks/top?apikey=${APIkey}&limit=10`;
+// const albumImagesAPI = `http://api.napster.com/v2.2/albums/Alb.54719066/images?apikey=${APIkey}`;
+// const trackByArtistAlbumOrShortucTrack = `http://api.napster.com/v2.2/tracks/${artistName}/${albumName}/${songName}=${APIkey} `;
+// const searchByArtist = `http://api.napster.com/v2.2/search?apikey=${APIkey}&query=${artistaName}&type=artist`
 
+// -------------
+
+// FEATHERS:
+//CHANGE BUTTON PLAY TO PAUSE AND CHANGE HANDLER WITH A FLAG "TOGGLE CLASS
+//DODAC PASEK DO PRZEWIJANIA UTWORU
+//ADDITIONAL BUTTONS:
 // RANDOM SONG FROM THE LIST
 // LOOP THE SONG
 // LOOP THE LIST
+// VOLUME BUTTON
+//DETAILS ABOUT THE ARTIST
+
+//STYLE:
+// HAMBURGER ANIMATION WITH LAYOUT OPTIONS:
 // NIGHT PANEL
 // LIGHT PANEL
 //ORANGE PANEL
@@ -17,129 +33,110 @@ const APIkey = "MWNiZjM1OTctYmRmYS00ODNhLTlkOTYtZDhkOTE0MzY3ODVl";
 // API FOR ARTIST INFO
 // API FOR SONG LYRICS
 
-function FetchNapster() {
-  const [name, setName] = useState("");
-  const [artistaNme, setArtistName] = useState("");
-  const [albumName, setAlbumName] = useState("");
-  // const [err, setErr] = useState(false);
-
-  const API = `https://api.napster.com/v2.1/tracks/top?apikey=${APIkey}`;
-
-  fetch(API)
-    .then((response) => {
-      if (response.ok) {
-        return response;
-      }
-      throw Error("Not working");
-    })
-    .then((response) => response.json())
-    .then((data) => {
-      // this.setErr= false,
-      (name = this.setName.data.tracks.name),
-        (artistaNme = this.setArtistName = data.tracks.artistName),
-        (albumName = this.setAlbumName = data.tracks.albumName);
-    });
-
-  const napsterSongs = {};
-}
-
 function Heading({ title }) {
-  return <h1>{title}</h1>;
+  return (
+    <h1>
+      {title}
+      <span role="img" aria-label="sheep">
+        🎧
+      </span>
+    </h1>
+  );
 }
 
-function SongPlayer({ showControls = true, song, isLooped = true }) {
-  const { audioURL, coverURL, artist, title } = song;
+function SongPlayer({ showControls = false, song, isLooped = true }) {
+  const audioRef = useRef();
+  console.log("render", audioRef);
+  const { audioUrl, coverUrl, artist, title } = song;
   return (
-    <section>
-      <Heading title="TS Music Player!! :) " />
-      <img width="400" height="400" src={coverURL} alt="Song cover" />
+    <section className="SongPlayer">
+      <Heading title="TS Music Player " />
+      <img width="400" height="400" src={coverUrl} alt="Song cover" />
 
       <h2>{artist}</h2>
       <h3>{title}</h3>
 
-      <audio key={audioURL} controls={showControls} loop={isLooped}>
-        <source src={audioURL} />
+      <audio
+        ref={audioRef}
+        key={audioUrl}
+        controls={showControls}
+        loop={isLooped}
+      >
+        <source src={audioUrl} />
       </audio>
+
+      <div>
+        <button onClick={() => audioRef.current.play()}>Play</button>
+        <button onClick={() => audioRef.current.pause()}>Pause</button>
+      </div>
     </section>
   );
 }
 
-function SongListItem({ song, isCurrent, onSelect }) {
-  const backgroundColor = isCurrent ? "darkslategrey" : "none";
-  const style = { backgroundColor };
+function Songs({ children }) {
+  return <section className="Songs">{children}</section>;
+}
 
+function SongListItem({ song, isCurrent, onSelect }) {
   function handleClick() {
     onSelect(song);
   }
   return (
-    <li style={style} onClick={handleClick}>
+    <li
+      className={`SongListItem ${isCurrent ? "selected" : ""}`}
+      onClick={handleClick}
+    >
       {song.title} by {song.artist} {isCurrent && "*"}
     </li>
   );
 }
 
 export default function App() {
-  const songs = [
-    {
-      audioURL:
-        "http://devthomas.pl/CoolProjects/MusicPlayer/MusicPlayer/MP3/T.S.%20-%20Lazare%20-%20Stell%20For%20Humans%20+%20Vocal%20v1.mp3",
-      coverURL:
-        "https://i1.sndcdn.com/artworks-000082317473-tqckdp-t500x500.jpg",
-      artist: "TS",
-      title: "Sivler for the monsters",
-    },
+  const URL = "https://examples.devmastery.pl/songs-api/songs";
 
-    {
-      audioURL: "http://examples.devmastery.pl/assets/audio/deadfro5h.mp3",
-      coverURL: "http://examples.devmastery.pl/assets/audio/deadfro5h.jpg",
-      artist: "starfrosh",
-      title: "Deadfro5h",
-    },
-
-    {
-      audioURL: "http://examples.devmastery.pl/assets/audio/majesty.mp3",
-      coverURL: "http://examples.devmastery.pl/assets/audio/majesty.jpg",
-      artist: "Ryan Craig Martin",
-      title: "Majesty (Original Mix)",
-    },
-
-    {
-      audioURL: "http://examples.devmastery.pl/assets/audio/runs.mp3",
-      coverURL: "http://examples.devmastery.pl/assets/audio/runs.jpg",
-      artist: "Wowa",
-      title: "Runs",
-    },
-
-    {
-      audioURL: "http://listen.vo.llnwd.net/g3/prvw/3/9/1/5/7/2269575193.mp3",
-      coverURL: "http://examples.devmastery.pl/assets/audio/runs.jpg",
-      artist: "napster",
-      title: "napster API song",
-    },
-  ];
-
-  const currentSong = songs[3];
-
+  const [songs, setSongs] = useState([]);
+  useEffect(() => {
+    fetch(URL).then((response) => {
+      if (response.ok) {
+        response.json().then(setSongs);
+      }
+    });
+  }, []);
+  const [currentSongIndex, setCurrentSongIndex] = useState(0);
+  const currentSong = songs[currentSongIndex];
   function handleSelectSong(selectedSong) {
-    console.log(selectedSong);
+    const audioIndex = songs.findIndex(
+      (song) => song.audioUrl === selectedSong.audioUrl
+    );
+    if (audioIndex >= 0) {
+      setCurrentSongIndex(audioIndex);
+    }
   }
 
   return (
     <div className="App">
-      <SongPlayer isLooped song={currentSong} />
-      <section>
-        <Heading title="Songs" />
-        <ul>
-          {songs.map((song) => (
-            <SongListItem
-              key={song.audioURL}
-              song={song}
-              isCurrent={currentSong.audioURL === song.audioURL}
-              onSelect={handleSelectSong}
-            />
-          ))}
-        </ul>
-      </section>
+      {songs.length === 0 ? (
+        "Loading..."
+      ) : (
+        <>
+          <SongPlayer isLooped song={currentSong} />
+          <Songs>
+            <>
+              <Heading title="Songs" />
+              <ul>
+                {songs.map((song) => (
+                  <SongListItem
+                    key={song.audioUrl}
+                    song={song}
+                    isCurrent={currentSong.audioUrl === song.audioUrl}
+                    onSelect={handleSelectSong}
+                  />
+                ))}
+              </ul>
+            </>
+          </Songs>
+        </>
+      )}
     </div>
   );
 }

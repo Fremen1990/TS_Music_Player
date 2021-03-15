@@ -48,4 +48,14 @@
       display: none;
     }
 
+    .SongPlayer .random{
+      padding: 20px;
+      margin:0 10px;
+      border-radius: 10px;
+      border-style: none;
+      font-size: 18px;
+      font-weight: bold;
+      background-color: gold;
+      cursor: pointer;
+    }
 

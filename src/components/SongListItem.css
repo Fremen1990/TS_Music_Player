@@ -12,3 +12,10 @@
     cursor:pointer;
   }
   
+  .SongListItem .favouriteBlank{
+    text-align: right;
+    margin-left:80px;
+    font-size: 20px;
+   float:right;
+
+  }

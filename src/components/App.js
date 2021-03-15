@@ -22,6 +22,8 @@ import "./App.css";
 // LOOP THE SONG
 // LOOP THE LIST
 // VOLUME BUTTON
+// ADD HAMBURGER NAV MENU WITH:  LOGIN, LOGUT, LAUOUT THREE COLORS: ORANGE/BLACK, WHITE AND BLACK/GRAY
+// ADD SEARCH INPUT
 //DETAILS ABOUT THE ARTIST
 //STYLE:
 // HAMBURGER ANIMATION WITH LAYOUT OPTIONS:
@@ -52,7 +54,6 @@ export function App() {
     );
     if (audioIndex >= 0) {
       setCurrentSongIndex(audioIndex);
-      console.log("current song index is !!! : ", currentSongIndex)
     }
   }
 
@@ -72,6 +73,11 @@ if(currentSongIndex===songs.length-1){
   setCurrentSongIndex(0)
 }}
 
+function handleRandomSong(){
+const randomSong = Math.floor(Math.random()*songs.length);
+setCurrentSongIndex(randomSong)
+}
+
 
   return (
     <div className="App">
@@ -79,7 +85,7 @@ if(currentSongIndex===songs.length-1){
         "Loading..."
       ) : (
         <>
-          <SongPlayer isLooped song={currentSong} handleChangeToNextSong={handleChangeToNextSong} handleChangeToPreviousSong={handleChangeToPreviousSong}/>
+          <SongPlayer isLooped song={currentSong} handleChangeToNextSong={handleChangeToNextSong} handleChangeToPreviousSong={handleChangeToPreviousSong} handleRandomSong={handleRandomSong} />
           <Songs>
             <>
               <Heading title="Songs" />

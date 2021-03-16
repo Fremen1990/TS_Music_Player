@@ -59,3 +59,55 @@
       cursor: pointer;
     }
 
+    @media (orientation:portrait) and (min-width: 320px) {
+
+      .SongPlayer{
+        margin:0;
+        width: 100vw;
+        /* padding: 5px 5px 10px; */
+        display: block;
+        flex-direction: column;
+        }
+    
+        .SongPlayer h2{
+          padding:10px;
+        } 
+           .SongPlayer h3{
+             margin-top:0;
+          padding:10px;
+        border-radius: 10px;
+    
+        }
+        
+        .SongPlayer img{
+          /* margin: 5px ; */
+          border-radius: 25px;
+          width: 250px;
+          height: 250px;
+          margin: 0;
+        }
+        
+        .SongPlayer button{
+          padding: 15px;
+          margin:0 10px;
+          border-radius: 20px;
+          font-size: 18px;
+   
+        }
+        
+        .SongPlayer .pauseButtonInActive{
+          display: none;
+        }
+        .SongPlayer .playButtonInactive{
+          display: none;
+        }
+    
+        .SongPlayer .random{
+          padding: 15px;
+          margin:10px 10px;
+          border-radius: 25px;
+          font-size: 18px;
+        }
+
+    }
+    

@@ -16,3 +16,24 @@
     
   }
   
+      
+  @media (orientation:portrait) and (min-width: 320px) {
+
+    .Songs{
+      /* display: flex; */
+      /* height: 100vvh; */
+      width:100vw;
+      padding: 5px;
+      margin-top:0px;
+      background-color: powderblue;
+
+    }
+    
+    .Songs ul{
+      text-align: left;
+      padding: 20px;
+      max-height: 100%;
+      
+    }
+
+}

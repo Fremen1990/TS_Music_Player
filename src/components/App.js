@@ -4,6 +4,13 @@ import { Songs } from "./Songs";
 import { SongListItem } from "./SongListItem";
 import { SongPlayer } from "./SongPlayer";
 import "./App.css";
+import Navbar from "./Navbar";
+import Home from "../pages/Home";
+import Login from "../pages/Login";
+import FindMusic from "../pages/FindMusic";
+import Layouts from "../pages/Layouts";
+
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 //napster API
 // const APIkey = "MWNiZjM1OTctYmRmYS00ODNhLTlkOTYtZDhkOTE0MzY3ODVl";
@@ -45,7 +52,7 @@ export function App() {
       }
     });
   }, []);
-  
+
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
   const currentSong = songs[currentSongIndex];
   function handleSelectSong(selectedSong) {
@@ -57,27 +64,28 @@ export function App() {
     }
   }
 
-  function handleChangeToPreviousSong(){
-     if(currentSongIndex>0){
-      setCurrentSongIndex(prevState =>prevState-1)}
-      if(currentSongIndex===0){
-        setCurrentSongIndex(songs.length-1)
-      }    
+  function handleChangeToPreviousSong() {
+    if (currentSongIndex > 0) {
+      setCurrentSongIndex((prevState) => prevState - 1);
+    }
+    if (currentSongIndex === 0) {
+      setCurrentSongIndex(songs.length - 1);
+    }
   }
 
-  function handleChangeToNextSong(){
-if(currentSongIndex>=0){
-  setCurrentSongIndex(prevState=>prevState+1)
-}
-if(currentSongIndex===songs.length-1){
-  setCurrentSongIndex(0)
-}}
+  function handleChangeToNextSong() {
+    if (currentSongIndex >= 0) {
+      setCurrentSongIndex((prevState) => prevState + 1);
+    }
+    if (currentSongIndex === songs.length - 1) {
+      setCurrentSongIndex(0);
+    }
+  }
 
-function handleRandomSong(){
-const randomSong = Math.floor(Math.random()*songs.length);
-setCurrentSongIndex(randomSong)
-}
-
+  function handleRandomSong() {
+    const randomSong = Math.floor(Math.random() * songs.length);
+    setCurrentSongIndex(randomSong);
+  }
 
   return (
     <div className="App">
@@ -85,7 +93,24 @@ setCurrentSongIndex(randomSong)
         "Loading..."
       ) : (
         <>
-          <SongPlayer isLooped song={currentSong} handleChangeToNextSong={handleChangeToNextSong} handleChangeToPreviousSong={handleChangeToPreviousSong} handleRandomSong={handleRandomSong} />
+          {/* <HamburgerMenu /> */}
+          <Router>
+            <Navbar />
+            <Switch>
+              <Route path="/" exact component={Home} />
+              <Route path="/login" exact component={Login} />
+              <Route path="/findmusic" exact component={FindMusic} />
+              <Route path="/layouts" exact component={Layouts} />
+            </Switch>
+          </Router>
+
+          <SongPlayer
+            isLooped
+            song={currentSong}
+            handleChangeToNextSong={handleChangeToNextSong}
+            handleChangeToPreviousSong={handleChangeToPreviousSong}
+            handleRandomSong={handleRandomSong}
+          />
           <Songs>
             <>
               <Heading title="Songs" />
